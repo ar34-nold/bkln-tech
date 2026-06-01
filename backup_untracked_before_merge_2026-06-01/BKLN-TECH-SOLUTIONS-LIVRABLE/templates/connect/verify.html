@@ -1,0 +1,32 @@
+{% extends 'connect/base.html' %}
+{% block title %}Vérification - Centrafrique Connect{% endblock %}
+{% block header %}
+<h1 class="fw-bold">Vérifier un document</h1>
+<p class="text-secondary">Renseignez le code de vérification pour confirmer l'authenticité.</p>
+{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+          <div class="mb-3">{{ form.verification_code.label_tag }}{{ form.verification_code }}</div>
+          <button type="submit" class="btn btn-primary">Vérifier</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% if result %}
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-8">
+      <div class="alert alert-{{ result.status }}" role="alert">
+        <h5 class="alert-heading">{{ result.title }}</h5>
+        <p>{{ result.message }}</p>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

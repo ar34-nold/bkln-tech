@@ -1,0 +1,23 @@
+.navbar {
+  background-color: #003366;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+header {
+  background: linear-gradient(90deg, #f8f9fa 55%, #e9f7ef 45%);
+}
+.card {
+  border: none;
+}
+.card h5 {
+  color: #004a7f;
+}
+.btn-primary {
+  background-color: #004a7f;
+  border-color: #004a7f;
+}
+.btn-primary:hover {
+  background-color: #003355;
+  border-color: #003355;
+}

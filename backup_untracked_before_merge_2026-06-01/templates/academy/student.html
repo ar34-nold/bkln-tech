@@ -1,0 +1,2 @@
+{% extends "base.html" %}
+{% block content %}<section class="container py-5"><h1>Espace etudiant</h1><div class="row g-3">{% for enrollment in enrollments %}<div class="col-md-4"><div class="module-card"><h2>{{ enrollment.course.title }}</h2><div class="progress"><div class="progress-bar" style="width: {{ enrollment.progress }}%">{{ enrollment.progress }}%</div></div></div></div>{% empty %}<div class="col"><div class="module-card">Aucune inscription pour le moment.</div></div>{% endfor %}</div></section>{% endblock %}

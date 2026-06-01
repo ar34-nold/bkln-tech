@@ -1,0 +1,48 @@
+{% extends 'connect/base.html' %}
+{% block title %}Accueil - Centrafrique Connect{% endblock %}
+{% block header %}
+<div class="row align-items-center">
+  <div class="col-lg-7">
+    <h1 class="display-5 fw-bold">Centrafrique Connect</h1>
+    <p class="lead text-secondary">Légalisation, authentification de documents officiels et casier judiciaire en ligne pour la République Centrafricaine.</p>
+    <div class="d-flex gap-2 flex-wrap">
+      <a class="btn btn-primary btn-lg" href="{% url 'connect:register' %}">Créer un compte</a>
+      <a class="btn btn-outline-primary btn-lg" href="{% url 'connect:public_verify' %}">Vérifier un document</a>
+    </div>
+  </div>
+  <div class="col-lg-5 text-center mt-4 mt-lg-0">
+    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80" alt="Centrafrique Connect" class="img-fluid rounded shadow" />
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">Demande de légalisation</h5>
+        <p class="card-text">Soumettez vos documents officiels pour validation et délivrance sécurisée avec QR code.</p>
+        <a class="btn btn-outline-primary" href="{% url 'connect:submit_document_request' %}">Soumettre</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">Casier judiciaire</h5>
+        <p class="card-text">Demandez la génération sécurisée de votre casier judiciaire en ligne.</p>
+        <a class="btn btn-outline-primary" href="{% url 'connect:submit_casier_request' %}">Demander</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">Vérification publique</h5>
+        <p class="card-text">Validez l'authenticité d'un document officiel avec un QR code ou un code unique.</p>
+        <a class="btn btn-outline-primary" href="{% url 'connect:public_verify' %}">Vérifier</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

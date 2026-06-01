@@ -1,0 +1,51 @@
+{% extends 'connect/base.html' %}
+{% block title %}Vérification de document - Centrafrique Connect{% endblock %}
+{% block header %}
+<h1 class="fw-bold">Vérification publique</h1>
+<p class="text-secondary">Entrez le code de vérification reçu pour confirmer l'authenticité de votre document.</p>
+{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <form method="get">
+          <div class="mb-3">
+            <label for="id_code" class="form-label">Code de vérification</label>
+            <input type="text" name="code" id="id_code" class="form-control" value="{{ request.GET.code }}" placeholder="Entrez votre code" />
+          </div>
+          <button type="submit" class="btn btn-primary">Vérifier</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% if document_request %}
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-8">
+      <div class="card border-success shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title">Document valide</h4>
+          <p class="card-text">Le document est authentique :</p>
+          <ul>
+            <li><strong>Référence :</strong> {{ document_request.request_number }}</li>
+            <li><strong>Titre :</strong> {{ document_request.titre }}</li>
+            <li><strong>Statut :</strong> {{ document_request.get_statut_display }}</li>
+          </ul>
+          {% if document_request.document_pdf %}
+            <a class="btn btn-outline-primary" href="{{ document_request.document_pdf.url }}" target="_blank">Télécharger le PDF</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% elif request.GET.code %}
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-8">
+      <div class="alert alert-danger" role="alert">
+        Aucun document trouvé pour ce code.
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
