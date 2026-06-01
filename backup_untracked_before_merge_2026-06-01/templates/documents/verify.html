@@ -1,2 +1,0 @@
-{% extends "base.html" %}
-{% block content %}<section class="container py-5"><h1>Verification publique</h1><div class="module-card"><p>Document : {{ document.title }}</p><p>Numero unique : {{ document.unique_number }}</p><p>Statut : {{ document.get_status_display }}</p></div></section>{% endblock %}

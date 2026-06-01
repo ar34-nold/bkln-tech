@@ -1,2 +1,0 @@
-{% extends "base.html" %}
-{% block content %}<section class="container py-5"><h1>Verification legalisation</h1><form class="form-panel mb-3"><input class="form-control mb-2" name="numero" value="{{ number }}" placeholder="Numero unique"><button class="btn btn-warning">Verifier</button></form>{% if record %}<div class="module-card">Document legalise le {{ record.legalized_at }}</div>{% elif number %}<div class="alert alert-warning">Aucun enregistrement trouve.</div>{% endif %}</section>{% endblock %}

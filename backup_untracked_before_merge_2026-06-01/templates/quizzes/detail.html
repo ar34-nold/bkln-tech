@@ -1,2 +1,0 @@
-{% extends "base.html" %}
-{% block content %}<section class="container py-5"><h1>{{ quiz.title }}</h1><form class="form-panel">{% for question in quiz.questions.all %}<fieldset class="mb-3"><legend>{{ question.text }}</legend>{% for choice in question.choices.all %}<label class="d-block"><input type="radio" name="q{{ question.id }}"> {{ choice.text }}</label>{% empty %}<textarea class="form-control" placeholder="Votre reponse"></textarea>{% endfor %}</fieldset>{% endfor %}<button class="btn btn-warning">Soumettre</button></form></section>{% endblock %}
