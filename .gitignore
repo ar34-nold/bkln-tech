@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pyc
+.Python
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+*.pot
+*.pyc
+
+# Environments
+env/
+venv/
+ENV/
+.venv/
+.Pipfile.lock
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# backups and archives
+*.zip
+*.tar.gz
+*.rar
+
+# temporary files
+*.swp
+*~
+
+# render
+.render/
+
+# ignore local backup folders
+BKLN-TECH-SOLUTIONS-LIVRABLE/
+BKLN-TECH-PROJET-FINAL/
+
+# ignore desktop shortcut links
+*.lnk
+
+# ignore logs
+server.log
+server.err.log
+
+# ignore credentials and env files
+.env
+.env.*

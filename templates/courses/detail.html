@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container py-5">
+  <div class="section-head d-flex flex-column flex-md-row align-items-start justify-content-between gap-3">
+    <div>
+      <h1>{{ course.title }}</h1>
+      <span>Prix : {{ course.price }} FCFA</span>
+    </div>
+    {% if user.is_authenticated %}
+      <a class="btn btn-warning" href="https://wa.me/23670039269?text=Bonjour%20BKLN-TECH%2C%20je%20veux%20payer%20la%20formation%20{{ course.title|urlencode }}%20pour%20{{ course.price }}%20FCFA.">Payer par Orange Money</a>
+      <a class="btn btn-success ms-2" href="{% url 'course_enroll' course.slug %}">S'inscrire à la formation</a>
+    {% else %}
+      <div>
+        <a class="btn btn-outline-primary" href="{% url 'login' %}?next={% url 'course_detail' course.slug %}">Connexion</a>
+        <a class="btn btn-warning ms-2" href="{% url 'register' %}?next={% url 'course_enroll' course.slug %}">Créer un compte</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <p class="lead">{{ course.description }}</p>
+  <p>Formateur : {{ course.trainer.get_full_name|default:course.trainer.username }}</p>
+
+  {% if user.is_authenticated %}
+    <div class="alert alert-warning">
+      Pour suivre cette formation, vous devez payer par Orange Money au <strong>72 34 37 76</strong>.
+      Après paiement, confirmez la transaction avec le numéro utilisé et la référence.
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      Vous devez créer un compte pour suivre cette formation. Connectez-vous ou inscrivez-vous, puis payez par Orange Money pour valider votre inscription.
+    </div>
+  {% endif %}
+
+  <h2>Programme</h2>
+  <div class="list-group">
+    {% for chapter in course.chapters.all %}
+      <div class="list-group-item">
+        <strong>{{ chapter.position }}. {{ chapter.title }}</strong>
+        {% for lesson in chapter.lessons.all %}
+          {% if user.is_authenticated %}
+            <div><a href="{% url 'lesson_detail' lesson.id %}">{{ lesson.title }}</a></div>
+          {% else %}
+            <div>{{ lesson.title }}</div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% empty %}
+      <div class="list-group-item">Programme en cours de publication.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

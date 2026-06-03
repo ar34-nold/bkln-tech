@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-5">
+      <div class="form-panel register-panel">
+        <p class="text-warning fw-semibold mb-1">BKLN-TECH</p>
+        <h1 class="h3 mb-3">Creer un compte</h1>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.full_name.id_for_label }}">{{ form.full_name.label }}</label>
+            {{ form.full_name }}
+            {% for error in form.full_name.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+            {{ form.phone }}
+            {% for error in form.phone.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.language.id_for_label }}">{{ form.language.label }}</label>
+            {{ form.language }}
+            <div class="form-text">Choisissez votre langue préférée pour les notifications.</div>
+            {% for error in form.language.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            {{ form.password }}
+            {% for error in form.password.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+          </div>
+
+          <button class="btn btn-warning w-100">Creer le compte</button>
+        </form>
+        <a class="btn btn-outline-primary w-100 mt-3" href="https://wa.me/23670039269?text=Bonjour%20BKLN-TECH%2C%20je%20veux%20des%20informations." target="_blank" rel="noopener">Informations sur WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

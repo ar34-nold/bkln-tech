@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container py-5">
+    <h1>Nos formations</h1>
+    <p>Informatique, maintenance, reseaux, bureautique, developpement web, Python, Django, API REST, Git, intelligence artificielle et IA generative.</p>
+    <a class="btn btn-warning" href="{% url 'course_list' %}">Explorer les formations</a>
+</section>
+
+<section class="container py-5">
+    <div class="alert alert-primary">
+        <h2 class="h5">Inscription obligatoire</h2>
+        <p>Pour choisir une formation et la suivre, vous devez d'abord créer un compte. Une fois connecté, vous pouvez envoyer votre demande d'inscription et payer votre formation.</p>
+        {% if user.is_authenticated %}
+            <a class="btn btn-warning" href="{% url 'course_list' %}">Voir les formations</a>
+        {% else %}
+            <a class="btn btn-warning me-2" href="{% url 'register' %}?next={% url 'course_list' %}">Créer un compte</a>
+            <a class="btn btn-outline-primary" href="{% url 'login' %}?next={% url 'course_list' %}">Se connecter</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="section-head">
+        <h2>Nos categories de formation</h2>
+        <span>Choisissez par domaine puis decouvrez les programmes correspondants.</span>
+    </div>
+    <div class="row g-3">
+        {% for category in categories %}
+            <div class="col-md-4">
+                <div class="module-card">
+                    <h3>{{ category.name }}</h3>
+                    <p>Voir les cours de la categorie {{ category.name }}.</p>
+                    <a class="btn btn-sm btn-outline-warning" href="{% url 'course_list' %}?category={{ category.slug }}">Voir cette categorie</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <div class="module-card">Aucune categorie de formation disponible.</div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="section-head">
+        <h2>Nos cours populaires</h2>
+        <span>Decouvrez les formations disponibles desormais sur BKLN-TECH.</span>
+    </div>
+    <div class="row g-3">
+        {% for course in courses %}
+            <div class="col-md-6 col-xl-4">
+                <div class="module-card">
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.description|truncatewords:20 }}</p>
+                    <span class="badge text-bg-primary">{{ course.category.name }}</span>
+                    <div class="mt-3">
+                        <a class="btn btn-sm btn-warning" href="{% url 'course_detail' course.slug %}">Voir le cours</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <div class="module-card">Aucune formation publiee pour le moment.</div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

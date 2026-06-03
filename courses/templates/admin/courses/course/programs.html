@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block content %}
+  <div class="app-programs">
+    <h1>{{ title }}</h1>
+    {% if messages %}
+      <div class="messagelist">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <div class="submit-row">
+        <input type="submit" value="Valider" class="default" />
+      </div>
+    </form>
+  </div>
+{% endblock %}

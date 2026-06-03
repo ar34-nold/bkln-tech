@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-band">
+  <div class="container py-5">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <p class="text-warning fw-semibold">BKLN-TECH, votre partenaire numerique de confiance.</p>
+        <h1>Solutions numeriques, formation, IA et administration en ligne</h1>
+        <p class="lead">Nous accompagnons les particuliers, entreprises et institutions en Republique Centrafricaine et a l'international.</p>
+        <a class="btn btn-warning btn-lg me-2" href="{% url 'quote_request' %}">Demander un devis</a>
+        <a class="btn btn-outline-light btn-lg" href="{% url 'services' %}">Voir les services</a>
+      </div>
+      <div class="col-lg-5">
+        <div class="hero-logo-panel">
+          <img src="/static/img/bkln-tech-logo.png" alt="Logo BKLN-TECH">
+          <div class="stats-panel">
+            <div><strong>24/7</strong><span>Support</span></div>
+            <div><strong>10+</strong><span>Domaines</span></div>
+            <div><strong>100%</strong><span>Suivi numerique</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="section-head"><h2>Fonctionnalites principales</h2><a href="{% url 'services' %}">Tout voir</a></div>
+  <div class="feature-image-grid">
+    {% for feature in features %}
+      <a class="feature-image-card" href="{% url feature.url_name %}">
+        <img src="{{ feature.image }}" alt="{{ feature.title }}">
+        <div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+<section class="container pb-5">
+  <div class="section-head"><h2>Services numeriques</h2><a href="{% url 'services' %}">Tout voir</a></div>
+  <div class="row g-3">
+    {% for service in services %}
+      <div class="col-md-6 col-xl-3"><div class="module-card"><h3>{{ service.title }}</h3><p>{{ service.summary|truncatewords:18 }}</p></div></div>
+    {% empty %}
+      <div class="col"><div class="module-card">Ajoutez des services depuis l'administration.</div></div>
+    {% endfor %}
+  </div>
+</section>
+<section class="container pb-5">
+  <div class="row g-4">
+    <div class="col-lg-4"><div class="feature-block"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Boutique"><h2>Boutique</h2><p>Ordinateurs, imprimantes, accessoires, logiciels et antivirus.</p><a href="{% url 'product_list' %}">Catalogue</a></div></div>
+    <div class="col-lg-4"><div class="feature-block"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Formations"><h2>Formations</h2><p>Formations en informatique, web, Django, API REST, IA et bureautique.</p><a href="{% url 'course_list' %}">Formations</a></div></div>
+    <div class="col-lg-4"><div class="feature-block"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80" alt="Administration"><h2>Administration</h2><p>Legalisation, verification QR Code et casier judiciaire en ligne.</p><a href="{% url 'submit_document' %}">Demarrer</a></div></div>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="alert alert-secondary">
+    <strong>Connexion admin :</strong> l'accès à l'administration se fait uniquement via la page de connexion.
+    <a class="btn btn-outline-dark btn-sm ms-3" href="{% url 'login' %}">Connexion</a>
+  </div>
+</section>
+<section class="newsletter-band">
+  <div class="container py-4 d-flex flex-column flex-md-row gap-3 justify-content-between align-items-md-center">
+    <div><h2>Recevoir les actualites BKLN-TECH</h2><p class="mb-0">Conseils, formations et nouveaux services.</p></div>
+    <form method="post" class="d-flex gap-2">{% csrf_token %}<input class="form-control" name="newsletter_email" type="email" placeholder="Email"><button class="btn btn-warning">S'inscrire</button></form>
+  </div>
+</section>
+{% endblock %}

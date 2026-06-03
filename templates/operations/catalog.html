@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Catalogue - BKLN-TECH{% endblock %}
+
+{% block content %}
+<div class="catalog-hero">
+  <div>
+    <h1>BKLN-TECH SOLUTIONS</h1>
+    <p>Vente, location, maintenance et installation informatique. Commandez directement par WhatsApp.</p>
+  </div>
+  {% if user.is_authenticated %}
+    <a class="btn btn-outline-light" href="{% url 'dashboard' %}">Tableau de bord</a>
+  {% else %}
+    <a class="btn btn-outline-light" href="{% url 'login' %}">Espace admin</a>
+  {% endif %}
+</div>
+
+<form class="catalog-filters" method="get">
+  <a class="btn {% if not selected %}btn-primary{% else %}btn-outline-secondary{% endif %}" href="{% url 'catalog' %}">Tous</a>
+  {% for value, label in categories %}
+    <button class="btn {% if selected == value %}btn-primary{% else %}btn-outline-secondary{% endif %}" type="submit" name="categorie" value="{{ value }}">{{ label }}</button>
+  {% endfor %}
+</form>
+
+<div class="home-services">
+  <div><strong>Vente</strong><span>Ordinateurs, accessoires et antivirus</span></div>
+  <div><strong>Maintenance</strong><span>Formatage, Windows, depannage</span></div>
+  <div><strong>Reseaux</strong><span>Routeurs, Wi-Fi, cablage RJ45</span></div>
+  <div><strong>Paiement</strong><span><img src="{% static 'img/orange-money.svg' %}" alt="Orange Money" class="orange-logo-small"></span></div>
+</div>
+
+<div class="product-grid">
+  {% for product in products %}
+    <article class="product-card">
+      <div class="product-image-wrap">
+        {% if product.image_externe %}
+          <img src="{{ product.image_externe }}" alt="{{ product.nom }}" class="product-image" loading="lazy">
+        {% elif product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.nom }}" class="product-image">
+        {% else %}
+          <div class="product-image product-image-empty">{{ product.get_categorie_display }}</div>
+        {% endif %}
+      </div>
+      <div class="product-card-body">
+        <span class="product-category">{{ product.get_categorie_display }}</span>
+        <h2>{{ product.nom }}</h2>
+        <p>{{ product.description|default:"Produit disponible chez BKLN-TECH SOLUTIONS."|truncatechars:110 }}</p>
+        <div class="product-meta">
+          <strong>{{ product.prix }} FCFA</strong>
+          <span>Stock: {{ product.stock }}</span>
+        </div>
+        <a class="btn btn-primary w-100" href="{% url 'order_product' product.pk %}">Commander</a>
+      </div>
+    </article>
+  {% empty %}
+    <div class="panel">
+      <p class="text-muted mb-0">Aucun produit disponible pour cette categorie.</p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

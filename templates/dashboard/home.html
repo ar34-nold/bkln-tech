@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="admin-hero">
+  <div class="container py-5">
+    <p class="text-warning fw-semibold">Espace administrateur</p>
+    <h1>Controle complet du site BKLN-TECH</h1>
+    <p class="lead">Suivez les activites, accedez aux modules, modifiez le catalogue, les formations, les commandes, les documents et le support.</p>
+    <div class="d-flex gap-2 flex-wrap">
+      <a class="btn btn-warning" href="/admin/">Ouvrir Django Admin</a>
+      <a class="btn btn-outline-light" href="{% url 'home' %}">Voir le site public</a>
+    </div>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="section-head"><h2>Statistiques</h2><span>Vue rapide</span></div>
+  <div class="stats-grid">{% for label,value in stats.items %}<div class="stat-card"><strong data-count="{{ value }}">{{ value }}</strong><span>{{ label }}</span></div>{% endfor %}</div>
+</section>
+{% if recent_enrollments %}
+<section class="container pb-5">
+  <div class="section-head"><h2>Nouvelles demandes d'inscription</h2><span>Inscription non payées</span></div>
+  <div class="list-group">
+    {% for enrollment in recent_enrollments %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ enrollment.student.get_full_name|default:enrollment.student.username }}</strong>
+          <div class="text-muted">{{ enrollment.course.title }} — {{ enrollment.enrolled_at|date:"SHORT_DATETIME_FORMAT" }}</div>
+        </div>
+        <div class="d-flex gap-2">
+          <a class="btn btn-sm btn-outline-primary" href="/admin/academy/enrollment/{{ enrollment.id }}/change/">Voir</a>
+          <a class="btn btn-sm btn-success" href="https://wa.me/23670039269?text=Nouveau%20demand%20d'inscription%20:%20{{ enrollment.student.get_full_name|urlencode }}%20-%20{{ enrollment.course.title|urlencode }}" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+<section class="container pb-5">
+  <div class="whatsapp-admin-panel">
+    <div>
+      <p class="fw-semibold mb-1">Administration WhatsApp</p>
+      <h2>Gerer le site depuis WhatsApp</h2>
+      <p class="mb-0">Envoyez une demande administrative au 70 03 92 69 pour ajouter un produit, modifier une formation, suivre une commande, verifier un document ou traiter un ticket.</p>
+    </div>
+    <div class="whatsapp-admin-actions">
+      <a href="https://wa.me/23670039269?text=ADMIN%20BKLN-TECH%20%3A%20je%20veux%20ajouter%20ou%20modifier%20un%20produit." target="_blank" rel="noopener">Gerer la boutique</a>
+      <a href="https://wa.me/23670039269?text=ADMIN%20BKLN-TECH%20%3A%20je%20veux%20gerer%20les%20commandes%20et%20paiements." target="_blank" rel="noopener">Commandes et paiements</a>
+      <a href="https://wa.me/23670039269?text=ADMIN%20BKLN-TECH%20%3A%20je%20veux%20gerer%20les%20formations%20ou%20documents." target="_blank" rel="noopener">Formations et documents</a>
+      <a href="https://wa.me/23670039269?text=ADMIN%20BKLN-TECH%20%3A%20je%20veux%20traiter%20un%20ticket%20support." target="_blank" rel="noopener">Support client</a>
+    </div>
+  </div>
+</section>
+<section class="container pb-5">
+  <div class="section-head"><h2>Modules de controle</h2><span>Gestion directe des donnees</span></div>
+  <div class="admin-module-grid">
+    {% for module in modules %}
+      <a class="admin-module-card" href="{{ module.url }}">
+        <img src="{{ module.image }}" alt="{{ module.title }}">
+        <div><h3>{{ module.title }}</h3><p>{{ module.description }}</p></div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+<section class="container pb-5">
+  <div class="section-head"><h2>Actions rapides</h2><span>Raccourcis administrateur</span></div>
+  <div class="quick-grid">
+    {% for shortcut in shortcuts %}
+      <a href="{{ shortcut.url }}">{{ shortcut.label }}</a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

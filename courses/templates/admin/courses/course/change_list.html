@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  <li>
+    <a href="{% url 'admin:courses_course_programs' %}" class="addlink">Import/Export programmes</a>
+  </li>
+  {{ block.super }}
+{% endblock %}

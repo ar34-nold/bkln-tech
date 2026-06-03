@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: bkln-tech
+    env: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: gunicorn bkln_tech.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com,www.bkln-tech.com,bkln-tech.com"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bkln-tech-db
+          property: connectionString
+databases:
+  - name: bkln-tech-db
+    databaseName: bkln_tech
+    user: bkln_tech
